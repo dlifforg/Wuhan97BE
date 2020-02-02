@@ -49,8 +49,8 @@ func Init() {
 		},
 	}
 	register(ss...)
-
 	Load()
+
 }
 
 func Load() {
