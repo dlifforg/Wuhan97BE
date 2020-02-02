@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-redis/redis"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -55,13 +56,14 @@ func Init() {
 func Load() {
 	for _, item := range sources {
 
+		log.Printf("starting request :%s",item.dataType)
+
 		resp, err := http.Get(item.url)
 
 		if err != nil {
 			return
 		}
 		defer resp.Body.Close()
-
 		result, err := ioutil.ReadAll(resp.Body)
 
 		_ = json.Unmarshal(result, &item.data)
@@ -113,6 +115,7 @@ func Load() {
 			break
 		default:
 		}
+		log.Printf("request finished :%s",item.dataType)
 
 	}
 }
