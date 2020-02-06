@@ -1,0 +1,13 @@
+version: "3"
+services:
+  backend:
+    build: ./.
+    network_mode: host
+    depends_on:
+      - redis
+### Redis ################################################
+  redis:
+    build: ./redis
+    volumes:
+      - ${DATA_PATH_HOST}/redis:/data
+    network_mode: host
