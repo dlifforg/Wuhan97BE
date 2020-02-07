@@ -12,6 +12,8 @@ func main() {
 	service.Init()
 	r := gin.Default()
 	r.GET("/index", handler.Index)
+	r.GET("/dashboard", handler.Dashboard)
+
 	service.Init()
 
 	c := cron.New()

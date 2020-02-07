@@ -18,6 +18,19 @@ type Response struct {
 	Data interface{}
 }
 
+func Dashboard(c *gin.Context)  {
+	data, err := service.Redis().Get("Index").Result()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+		return
+	}
+	var d interface{}
+	json.Unmarshal([]byte(data),&d)
+	rsp:=Response{
+		Data:   d,
+	}
+	c.JSON(http.StatusOK, rsp)
+}
 func Index(c *gin.Context)  {
 	var req = struct {
 		Offset int32  `form:"offset"`
@@ -48,9 +61,6 @@ func Index(c *gin.Context)  {
 		data=append(data,d)
 	}
 	rsp:=Response{
-		Offset: req.Offset,
-		Limit:  req.Limit,
-		Prefix: req.Prefix,
 		Data:   data,
 	}
 	c.JSON(http.StatusOK, rsp)

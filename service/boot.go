@@ -112,6 +112,9 @@ func Load() {
 			rc.ZAdd(key, Z...)
 			break
 		case "Index":
+			key = "Index"
+			value,_:=json.Marshal(item.data.Data)
+			rc.Set(key,value,0)
 			break
 		default:
 		}
